@@ -36,6 +36,7 @@ class Program
             {
                 Console.WriteLine($"You guessed it! It took you {count} tries. ");
                 Console.Write("Do you want to play again? yes/no ");
+                
                 string response = Console.ReadLine();
                 if (response == "yes") {
                     targetNumber = randomNumber.Next(1,100);
