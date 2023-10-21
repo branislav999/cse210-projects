@@ -35,6 +35,14 @@ public class Journal
     {
         Console.WriteLine("Please enter the name of the file: ");
         string filename = Console.ReadLine(); 
+        Console.WriteLine("Please enter the password for accessing the file: ");
+        string password = Console.ReadLine();
+
+        using (StreamWriter passwordsFile = File.AppendText("passwords.txt"))
+        {
+            passwordsFile.WriteLine($"{filename}~{password}");
+        }
+
         using (StreamWriter outputFile = new StreamWriter(filename))
             
             {
@@ -51,23 +59,49 @@ public class Journal
 
     public void Load()
     {
-        entries.Clear();
-
         Console.WriteLine("Please enter the name of the file: ");
         string filename = Console.ReadLine();
         string[] lines = System.IO.File.ReadAllLines(filename);
+        
+        Console.WriteLine("Please enter the password for the file: ");
+        string password = Console.ReadLine();
+        string filePassword = "";
 
-        foreach (string line in lines)
+        string[] pairs = System.IO.File.ReadAllLines("passwords.txt");
+        foreach (string pair in pairs)
         {
-            string[] split = line.Split("~");
-            string date = split[0];
-            string prompt = split[1];
-            string response = split[2];
-
-            Entry entry = new Entry(prompt, response);
-            entries.Add(entry);
-
+            string[] part = pair.Split("~");
+            if (part[0] == filename)
+            {
+                filePassword = part[1];
+            }
+            
         }
+        
+        if (password == filePassword)
+        {
+            entries.Clear();
+
+            foreach (string line in lines)
+            {
+                string[] split = line.Split("~");
+                string date = split[0];
+                string prompt = split[1];
+                string response = split[2];
+
+                Entry entry = new Entry(prompt, response);
+                entries.Add(entry);
+                entry.Display();
+                
+            }
+        }
+
+        else
+        {
+            Console.WriteLine("Password incorrect");
+        }
+
+        
     }
     
 }
