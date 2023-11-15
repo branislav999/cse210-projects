@@ -15,5 +15,5 @@ public class Reference
     public string GetReference()
     {
         return reference;
-    }
+    } 
 }

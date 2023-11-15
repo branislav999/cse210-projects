@@ -29,7 +29,8 @@ class Program
                         Console.WriteLine("\nApply that Scripture in your life! ");
                         choice = false;
                     }
-                break;
+                break; 
+                
 
             case "quit":
                 choice = false;

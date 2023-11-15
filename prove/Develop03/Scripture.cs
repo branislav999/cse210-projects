@@ -61,7 +61,7 @@ public class Scripture
 
     scripturelist[index] = new string('_', scripturelist[index].Length);
 }
-
+ 
     public bool IsCompletelyHidden()
 {
     return scripturelist.All(word => word.All(letter => letter == '_'));
